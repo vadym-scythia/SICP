@@ -1,0 +1,23 @@
+#lang sicp
+
+(define (recursive n)
+  (cond ((< n 3) n)
+        (else (+ (recursive (- n 1))
+                 (recursive (- n 2))
+                 (recursive (- n 3))))))
+
+(define (iterative n)
+  (a2 2 1 0 3))
+
+(define (a1 n count first-n near-node is-leaf)
+  (cond ((and (< n 3) (not is-leaf)) (a1 n (+ count n) first-n near-node true))
+        (else (cond ((not is-leaf) (a1 (- n 1) count first-n n false))
+                    ((= (+ n 1) near-node) (a1 (- near-node 2) count first-n near-node false))
+                    ((= (+ n 2) near-node) (a1 (- near-node 3) count first-n near-node false))
+                    ((and (= (+ n 3) near-node) (<= (+ near-node 1) first-n)) (a1 (- (+ near-node 1) 2) count first-n (+ near-node 1) false))
+                    (else count)))))
+
+(define (a2 a b c count)
+  (cond ((< count 0) count)
+        ((= count 0) c)
+        ((a2 (a + b)  (b + c) (a)))))

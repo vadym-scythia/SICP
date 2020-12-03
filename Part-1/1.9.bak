@@ -1,0 +1,11 @@
+#lang sicp
+
+(define (+ a b) ; recursive. We build a stack of N calls of (+ a b) function, and during recursive closing increment b for N times.
+  (if (= a 0)
+      b
+      (inc (+ (dec a) b)))) ; interpretator's recursion mechanism somehow saves the scope of called functions during recursion. How? Does the last recursivly called function have the all scope as its' local scope?
+
+(define (another+ a b) ; iterative. There is no stack of recursivly connected functions here, each time we call new another+ func, but the value of parameters control the exit from iteration.
+  (if (= a 0)
+      b
+      (another+ (dec a) (inc b))))
