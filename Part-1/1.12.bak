@@ -1,2 +1,18 @@
 #lang sicp
 
+; Pascal's triangle: n - row, k - column of element
+
+;(define (pascal-trngl n k)
+ ; (if (and (> n 0)
+  ;         (> k 0))
+      
+
+(define (binom-coeff n k) ; use this non-recursive proc to check the answer
+  (/ (factorial n 1)
+     (* (factorial k 1)
+        (factorial (- n k) 1))))
+
+(define (factorial x sum)
+  (if (< x 1)
+      sum
+      (factorial (- x 1) (* sum  x))))
