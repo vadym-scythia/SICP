@@ -73,7 +73,7 @@ result from modified search-for-fast-primes (exc. 1.23)
 1013 *** 2 ms
 1019 *** 1 ms
 
-result from search-for-fast-primes, each number tested for 3 times (exc. 1.23)
+result from search-for-fast-primes, each number tested for 3 times (exc. 1.24)
 
 1009 *** 6 ms
 1013 *** 7 ms

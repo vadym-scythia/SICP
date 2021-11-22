@@ -1,0 +1,97 @@
+#lang sicp
+
+; main
+
+(define (search-for-fast-primes start-number times)
+  (find-first-three-odd-primes (+ start-number 1) 0 times))
+
+(define (find-first-three-odd-primes start-number count times)
+  (if (< count 3)
+      (if (= (remainder start-number 2) 0)
+          (find-first-three-odd-primes (+ start-number 1) count times)
+          (find-first-three-odd-primes (+ start-number 1) (+ count (start-prime-test start-number (runtime) times)) times))))
+  
+; time and display
+
+(define (start-prime-test number start-time times)
+  (cond ((fast-prime? number times)(report-prime number (- (runtime) start-time)) 1) ; returning value could be refactored, out of function
+        (else 0)))
+
+(define (report-prime number elapsed-time)
+  (newline)
+  (display number)
+  (display " *** ")
+  (display elapsed-time)
+  (display " ms"))
+
+; fast-prime?
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((ferma-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
+(define (ferma-test n)
+  (define (try-it a)
+    (= (mod-expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+
+; modified expmod
+
+(define (mod-expmod base exp m)
+  (remainder (fast-expt base exp) m))
+
+(define (fast-expt b n)
+  (cond ((= n 0) 1)
+        ((even? n) (square (fast-expt b (/ n 2))))
+        (else (* b (fast-expt b (- n 1))))))
+
+(define (square n)
+  (* n n))
+
+; results
+
+#|
+
+result from non modified expmod, 3 times check
+
+1009 *** 6 ms
+1013 *** 7 ms
+1019 *** 7 ms
+
+result from modified expmod, 3 times check
+
+1009 *** 107 ms
+1013 *** 130 ms
+1019 *** 128 ms
+
+
+10007 *** 9 ms
+10009 *** 11 ms
+10037 *** 8 ms
+
+10007 *** 5700 ms
+10009 *** 17434 ms
+10037 *** 7661 ms
+
+
+100003 *** 10 ms
+100019 *** 9 ms
+100043 *** 9 ms
+
+100003 *** 520864 ms
+100019 *** 514644 ms
+100043 *** 623976 ms
+
+
+1000003 *** 11 ms
+1000033 *** 11 ms
+1000037 *** 11 ms
+
+1000003 *** 35951675 ms
+1000033 *** 32934581 ms
+1000037 *** 35676912 ms
+
+Conclusion: with a help of remainder function in the original non modified expmod, we can use numbers, that are not to bigget then m.
+
+|#
