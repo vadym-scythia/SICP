@@ -1,14 +1,13 @@
 #lang sicp
 
-; test data: (isCarmichael 563 1)
-; debug data: (= (expmod 561 563 563) 561)
-
-(define (isCarmichael n a)
-  (cond ((> n a)
-         (if (= (expmod a n n) a)
-             (isCarmichael n (+ a 1))
-         true))
-        (else false)))
+(define (carmichael-test n)
+  (define (carmichael-test-a n a)
+    (cond ((> n a)
+           (if (= (expmod a n n) a)
+               (carmichael-test-a n (+ a 1))
+               false))
+          (else true)))
+  (carmichael-test-a n 1))
 
 (define (expmod base exp m)
   (cond ((= exp 0) 1)
