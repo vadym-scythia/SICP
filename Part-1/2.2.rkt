@@ -41,5 +41,5 @@
     (display (y-point p))
     (display ")"))
   (print-point (midpoint-segment (make-segment (make-point x1 y1)
-                                  (make-point x2 y2)))))
+                                               (make-point x2 y2)))))
                 
