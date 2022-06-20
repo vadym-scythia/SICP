@@ -11,6 +11,8 @@
         (upper-bound interval))
      2))
 
+; main
+
 (define (make-center-percent center percent)
   (let ((x (/ (* percent center) 100)))
     (make-interval (- center x) (+ center x))))
