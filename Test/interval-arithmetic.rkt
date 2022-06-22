@@ -37,3 +37,13 @@
 
 (define (width i)
   (/ (- (upper-bound i) (lower-bound i)) 2))
+
+
+(define (make-center-percent center percent)
+  (let ((x (/ (* percent center) 100)))
+    (make-interval (- center x) (+ center x))))
+
+(define (percent interval)
+  (let ((center (/ (+ (upper-bound interval) (lower-bound interval)) 2))
+        (tolerance (- (/ (+ (upper-bound interval) (lower-bound interval)) 2) (lower-bound interval))))
+    (/ (* 100 tolerance) center)))

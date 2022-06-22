@@ -1,5 +1,7 @@
 #lang sicp
 
+; util
+
 (define (make-interval a b) (cons a b))
 (define (upper-bound interval) (cdr interval))
 (define (lower-bound interval) (car interval))
@@ -7,10 +9,6 @@
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
                  (+ (upper-bound x) (upper-bound y))))
-
-(define (sub-interval x y)
-  (make-interval (- (lower-bound x) (lower-bound y))
-                 (- (upper-bound x) (upper-bound y))))
 
 (define (mul-interval x y)
   (let ((p1 (* (lower-bound x) (lower-bound y)))
@@ -29,6 +27,16 @@
                       (make-interval (/ 1.0 (upper-bound y))
                                      (/ 1.0 (lower-bound y)))))))
 
+(define (par1 r1 r2)
+    (div-interval (mul-interval r1 r2)
+                  (add-interval r1 r2)))
+
+(define (par2 r1 r2)
+    (let ((one (make-interval 1 1)))
+        (div-interval one
+                      (add-interval (div-interval one r1)
+                                    (div-interval one r1)))))
+
 (define (make-center-width c w)
   (make-interval (- c w) (+ c w)))
 
@@ -37,3 +45,21 @@
 
 (define (width i)
   (/ (- (upper-bound i) (lower-bound i)) 2))
+
+
+(define (make-center-percent center percent)
+  (let ((x (/ (* percent center) 100)))
+    (make-interval (- center x) (+ center x))))
+
+(define (percent interval)
+  (let ((center (/ (+ (upper-bound interval) (lower-bound interval)) 2))
+        (tolerance (- (/ (+ (upper-bound interval) (lower-bound interval)) 2) (lower-bound interval))))
+    (/ (* 100 tolerance) center)))
+
+; test
+
+(define a1 (make-center-width 2 0.1))
+(define b1 (make-center-width 3 0.0001))
+
+(define test1 (/ (center (par1 a1 a1)) (percent (par1 a1 a1))))
+(define test2 (/ (center (par2 a1 a1)) (percent (par2 a1 a1))))

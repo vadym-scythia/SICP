@@ -1,0 +1,8 @@
+#lang sicp
+
+(define (test)
+    (+ 34 35))
+
+(define i 34)
+(define j 35)
+(test)
