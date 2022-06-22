@@ -35,7 +35,7 @@
     (let ((one (make-interval 1 1)))
         (div-interval one
                       (add-interval (div-interval one r1)
-                                    (div-interval one r1)))))
+                                    (div-interval one r2)))))
 
 (define (make-center-width c w)
   (make-interval (- c w) (+ c w)))
