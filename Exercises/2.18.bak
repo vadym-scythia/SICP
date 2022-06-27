@@ -1,0 +1,7 @@
+#lang sicp
+
+(define (reverse list)
+  (define (reverse-cycle list reversed)
+    (if (null? list)
+        reversed))
+  (reverse-cycle list (list)))

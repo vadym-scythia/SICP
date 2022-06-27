@@ -1,0 +1,14 @@
+#lang sicp
+
+(define (append list1 list2)
+  (if (null? list1)
+      list2
+      (cons (car list1) (append (cdr list1) list2))))
+
+
+(define (reverse list1)
+  (define (reverse-cycle list1 reversed)
+    (if (null? list1)
+        reversed
+        (reverse-cycle (cdr list1) (append (list (car list1)) reversed))))
+  (reverse-cycle list1 (list)))
