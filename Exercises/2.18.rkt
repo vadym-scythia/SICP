@@ -1,10 +1,10 @@
 #lang sicp
 
+; "append" from std-lib could be used intead of this implementation
 (define (append list1 list2)
   (if (null? list1)
       list2
       (cons (car list1) (append (cdr list1) list2))))
-
 
 (define (reverse list1)
   (define (reverse-cycle list1 reversed)
