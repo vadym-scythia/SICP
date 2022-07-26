@@ -34,7 +34,16 @@
                             (cycle (left-branch items) result (append (cdr items) other-items) #f)))
                     (cycle (branch-structure items) result other-items #f))))))
   (cycle mobile 0 (list) #f))
-; hello from Ubuntu!
+
+; new implm
+
+(define (testw mobile)
+  (define (cycle mobile store weight)
+    (if (pair? (branch-structure (left-branch mobile)))
+        (cycle (left-branch mobile) (rigth-branch mobile) weight)
+        (cycle (car store) (cdr store) (+ weight (left-branch mobile)))))
+  (cycle mobile (list) 0))
+    
 
 ; tests
 
