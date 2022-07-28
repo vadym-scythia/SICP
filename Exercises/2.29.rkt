@@ -41,7 +41,11 @@
   (define (cycle mobile store weight)
     (if (pair? (branch-structure (left-branch mobile)))
         (cycle (left-branch mobile) (rigth-branch mobile) weight)
-        (cycle (car store) (cdr store) (+ weight (left-branch mobile)))))
+        (if (null? store)
+            (+ weight (branch-structure (left-branch mobile)))
+            (if (null? (car (car (cdr store))))
+                (cycle (make-mobile (car store) (make-branch 0 0)) (list) weight)
+                (cycle (make-mobile (car store) (car (car (cdr store)))) (cdr (car (cdr store))) (+ weight (branch-structure (left-branch mobile))))))))
   (cycle mobile (list) 0))
     
 
