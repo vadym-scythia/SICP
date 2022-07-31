@@ -35,20 +35,6 @@
                     (cycle (branch-structure items) result other-items #f))))))
   (cycle mobile 0 (list) #f))
 
-; new implm
-
-(define (testw mobile)
-  (define (cycle mobile store weight)
-    (if (pair? (branch-structure (left-branch mobile)))
-        (cycle (left-branch mobile) (rigth-branch mobile) weight)
-        (if (null? store)
-            (+ weight (branch-structure (left-branch mobile)))
-            (if (null? (car (car (cdr store))))
-                (cycle (make-mobile (car store) (make-branch 0 0)) (list) weight)
-                (cycle (make-mobile (car store) (car (car (cdr store)))) (cdr (car (cdr store))) (+ weight (branch-structure (left-branch mobile))))))))
-  (cycle mobile (list) 0))
-    
-
 ; tests
 
 (define test (left-branch (make-mobile (make-branch 3 7)
