@@ -1,4 +1,4 @@
-#lang sicp
+#lang racket
 
 (define (make-mobile left right)
   (list left right))
@@ -9,7 +9,7 @@
 (define (left-branch mobile)
   (car mobile))
 
-(define (rigth-branch mobile)
+(define (right-branch mobile)
   (car (cdr mobile)))
 
 (define (branch-length branch)
@@ -40,26 +40,26 @@
 (define (testw mobile)
   (define (cycle mobile store weight)
     (if (pair? (branch-structure (left-branch mobile)))
-        (cycle (left-branch mobile) (rigth-branch mobile) weight)
-        (if (null? store)
+        (cycle (branch-structure (left-branch mobile)) (right-branch mobile) weight)
+        (if (and (null? store) (null? (right-branch mobile)) (> weight 0))
             (+ weight (branch-structure (left-branch mobile)))
-            (if (null? (car (car (cdr store))))
-                (cycle (make-mobile (car store) (make-branch 0 0)) (list) weight)
-                (cycle (make-mobile (car store) (car (car (cdr store)))) (cdr (car (cdr store))) (+ weight (branch-structure (left-branch mobile))))))))
+            (if (null? store)
+                (cycle (make-mobile (right-branch mobile) (list)) (list) (+ weight (branch-structure (left-branch mobile))))
+                (if (null? (car (car (cdr store))))
+                    (cycle (make-mobile (car store) (list)) (list) weight)
+                    (cycle (make-mobile (car store) (car (car (cdr store)))) (cdr (car (cdr store))) (+ weight (branch-structure (left-branch mobile)))))))))
   (cycle mobile (list) 0))
     
 
 ; tests
 
-(define test (left-branch (make-mobile (make-branch 3 7)
+(define test1 (left-branch (make-mobile (make-branch 3 7)
                                        (make-branch 2 5))))
-
-(define test1 (rigth-branch (make-mobile (make-branch 3 7)
+(define test2 (right-branch (make-mobile (make-branch 3 7)
                                        (make-branch 2 5))))
+(define test3 (branch-length test1))
+(define test4 (branch-structure test1))
 
-(define test2 (branch-length test))
-
-(define test3 (branch-structure test))
-
-(define test4 (total-weight (make-mobile (make-branch 3 (make-branch 4 3))
-                                       (make-branch 2 (make-branch 5 3)))))
+(define test5 (testw (make-mobile (make-branch 2 3) (make-branch 4 5))))
+(define test6 (testw (make-mobile (make-branch 2 3) (make-branch 4 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
+;(define test7 (testw (make-mobile (make-branch 2 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 4 5))))
