@@ -55,27 +55,38 @@
 (define (balanced? mobile)
   (= (total-spin-moment (make-mobile (left-branch mobile) (make-branch 0 0)))
      (total-spin-moment (make-mobile (right-branch mobile) (make-branch 0 0)))))
-  
 
 ; tests
 (define test1 (left-branch (make-mobile (make-branch 3 7) (make-branch 2 5))))
 (define test2 (right-branch (make-mobile (make-branch 3 7) (make-branch 2 5))))
-(define test3 (branch-length test1))
-(define test4 (branch-structure test1))
-(define test5 (total-weight (make-mobile (make-branch 2 3) (make-branch 4 5))))
-(define test6 (total-weight (make-mobile (make-branch 2 3) (make-branch 4 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
-(define test7 (total-weight (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
-(define test8 (total-weight (make-mobile (make-branch 2 (make-mobile (make-branch 2 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 4 6))) (make-branch 4 7))))
-(define test9 (total-weight (make-mobile (make-branch 1 (make-mobile (make-branch 2 (make-mobile (make-branch 3 4)
-                                                                                          (make-branch 5 6)))
-                                                              (make-branch 7 (make-mobile (make-branch 8 9)
-                                                                                          (make-branch 10 11)))))
-                                         (make-branch 12 (make-mobile (make-branch 13 14)
-                                                                      (make-branch 15 16))))))
-(define test10 (total-spin-moment (make-mobile (make-branch 2 3) (make-branch 4 5))))
-(define test11 (total-spin-moment (make-mobile (make-branch 2 3) (make-branch 4 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
-(define test12 (total-spin-moment (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
-(define test13 (balanced? (make-mobile (make-branch 2 3) (make-branch 4 6))))
-(define test14 (balanced? (make-mobile (make-branch 2 3) (make-branch 2 3))))
-(define test15 (balanced? (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
-(define test16 (balanced? (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
+;(define test3 (branch-length test1))
+;(define test4 (branch-structure test1))
+;(define test5 (total-weight (make-mobile (make-branch 2 3) (make-branch 4 5))))
+;(define test6 (total-weight (make-mobile (make-branch 2 3) (make-branch 4 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
+;(define test7 (total-weight (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
+;(define test8 (total-weight (make-mobile (make-branch 2 (make-mobile (make-branch 2 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 4 6))) (make-branch 4 7))))
+;(define test9 (total-weight (make-mobile (make-branch 1 (make-mobile (make-branch 2 (make-mobile (make-branch 3 4)
+     ;                                                                                     (make-branch 5 6)))
+    ;                                                          (make-branch 7 (make-mobile (make-branch 8 9)
+   ;                                                                                       (make-branch 10 11)))))
+  ;                                       (make-branch 12 (make-mobile (make-branch 13 14)
+ ;                                                                     (make-branch 15 16))))))
+;(define test10 (total-spin-moment (make-mobile (make-branch 2 3) (make-branch 4 5))))
+;(define test11 (total-spin-moment (make-mobile (make-branch 2 3) (make-branch 4 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
+;(define test12 (total-spin-moment (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
+;(define test13 (balanced? (make-mobile (make-branch 2 3) (make-branch 4 6))))
+;(define test14 (balanced? (make-mobile (make-branch 2 3) (make-branch 2 3))))
+;(define test15 (balanced? (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 6 7))))
+;(define test16 (balanced? (make-mobile (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))) (make-branch 1 (make-mobile (make-branch 2 3) (make-branch 4 5))))))
+
+; 2.29.d
+;(define (make-mobile left right)(cons left right))
+;(define (make-branch length structure) (cons length structure))
+;yes, these implementations change a lot in other functions, as these implementations create a list structure, but not a list itself.
+;list structure (uncomment):
+;(cons 1 (cons 2 (cons 3 (cons 4 5))))
+;list:
+;(cons 1 (cons 2 (cons 3 (cons 4 nil))))
+;also list, but in a short syntaxis:
+;(list 1 2 3 4)
+;the right way to handle this kind of problem is to abstract difference between list structure and list from the client functions. 
