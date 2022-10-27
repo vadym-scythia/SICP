@@ -10,6 +10,6 @@
   (if (null? (car seqs))
       nil
       (cons (accumulate op init (map (lambda seq (if (pair? seq) (car (car seq)))) seqs))
-            (accumulate-n op init   (map (lambda seq (if (pair? seq) (cdr (car seq)))) seqs)))))
+            (accumulate-n op init (map (lambda seq (if (pair? seq) (cdr (car seq)))) seqs)))))
 
 (define s (list (list 1 2 3) (list 4 5 6) (list 7 8 9) (list 10 11 12)))
