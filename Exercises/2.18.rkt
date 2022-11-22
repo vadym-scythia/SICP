@@ -1,6 +1,6 @@
 #lang sicp
 
-; "append" from std-lib could be used intead of this implementation
+; "append" from std-lib could be used instead of this implementation
 (define (append list1 list2)
   (if (null? list1)
       list2
@@ -12,3 +12,5 @@
         reversed
         (reverse-cycle (cdr list1) (append (list (car list1)) reversed))))
   (reverse-cycle list1 (list)))
+
+(reverse (list 1 2 3))

@@ -1,4 +1,5 @@
-#lang racket
+#lang sicp
+
 ;util
 (define (square x)
   (* x x))
@@ -66,3 +67,22 @@
               (filter even?
                       (map fib
                            (enumerate-interval 0 n)))))
+
+(define (list-fib-squares n)
+  (accumulate cons
+              (list)
+              (map square
+                   (map fib
+                        (enumerate-interval 0 n)))))
+
+(define (fib-seq n)
+  (accumulate cons
+              (list)
+              (map fib
+                   (enumerate-interval 0 n))))
+
+(define (product-of-squares-of-odd-elements sequence)
+  (accumulate *
+              1
+              (map square
+                   (filter odd? sequence))))
