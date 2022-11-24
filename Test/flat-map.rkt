@@ -34,10 +34,12 @@
 
 ; flatmap
 
-(define n 3)
-
 (define (flatmap proc seq)
   (accumulate append nil (map proc seq)))
+
+; flatmap and prime-sum-pairs
+
+(define n 6)
 
 (define (prime-sum? pair)
   (prime? (+ (car pair) (cadr pair))))
@@ -55,4 +57,19 @@
                 (enumerate-interval 1 n)))))
 
 (prime-sum-pairs n)
-               
+
+; flatmap and permutations
+
+(define (remove item seq)
+  (filter (lambda (x) (not (= x item)))
+          seq))
+
+(define (permutations s)
+  (if (null? s)
+      (list nil)
+      (flatmap (lambda (x)
+                 (map (lambda (p) (cons x p))
+                      (permutations (remove x s))))
+               s)))
+
+(permutations (list 1 2 3))
