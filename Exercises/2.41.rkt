@@ -37,9 +37,9 @@
 
 (define (triplet n s)
   (filter-with-param is-equal?
-                     (flatmap (lambda (i) (list i (map (lambda (j) (list j (map (lambda (k) k)
-                                                                        (enumerate-interval 1 n))))
-                                               (enumerate-interval 1 n))))
+                     (flatmap (lambda (i) (flatmap (lambda (j) (map (lambda (k) (list i j k))
+                                                                            (enumerate-interval 1 n)))
+                                                   (enumerate-interval 1 n)))
                               (enumerate-interval 1 n))
                      s))
 
